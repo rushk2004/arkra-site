@@ -129,14 +129,15 @@ html[data-theme="dark"] .primary {
   gap: 42px;
 }
 .wordmark {
-  font-size: 27px;
-  color: white;
-  letter-spacing: 3px;
-  font-weight: 800;
-  text-decoration: none;
+  display: block;
+  width: fit-content;
+  border-radius: 6px;
 }
-.wordmark span {
-  color: #79bbca;
+.wordmark img {
+  display: block;
+  width: 76px;
+  height: auto;
+  border-radius: inherit;
 }
 .brandnote {
   font-size: 10px;

@@ -51,7 +51,7 @@ export function shell() {
   document.body.classList.toggle("presentation", params.get("present") === "1");
   const h = currentHome();
   document.querySelector("#header").innerHTML =
-    `<div class="demo-bar"><span class="demo-dot"></span> Demo · All figures are illustrative. Not a property assessment, valuation, insurance quote or financial advice.</div><header class="topbar"><div class="header"><div><a class="wordmark" href="${href("overview")}">ARKRA<span> /</span></a><div class="brandnote">A BETTER-PREPARED HOME</div></div><nav aria-label="Main navigation">${[
+    `<div class="demo-bar"><span class="demo-dot"></span> Demo · All figures are illustrative. Not a property assessment, valuation, insurance quote or financial advice.</div><header class="topbar"><div class="header"><div><a class="wordmark" href="${href("overview")}" aria-label="ARKRA home"><img src="${root}assets/arkra-logo.png" alt="ARKRA" width="615" height="544"></a><div class="brandnote">A BETTER-PREPARED HOME</div></div><nav aria-label="Main navigation">${[
       ["check", "Check"],
       ["home", "My home"],
       ["plan", "Plan"],
