@@ -1,0 +1,38 @@
+[
+  {
+    "id": "general",
+    "name": "Example (fictional) · Hearthway Home Improvements",
+    "group": "TrustMark",
+    "speciality": "General home improvements",
+    "description": "Illustrative installer for insulation, shading and general improvements. This is not a real business or a registered contractor.",
+    "accreditation": "In the live product, check current TrustMark registration for the relevant work. TrustMark is a government-endorsed quality scheme; this fictional listing holds no registration.",
+    "source": "https://www.trustmark.org.uk/about/who-is-trustmark",
+    "checked": "2026-11-08",
+    "verified": false,
+    "isFictional": true
+  },
+  {
+    "id": "energy",
+    "name": "Example (fictional) · Bright Roof Energy",
+    "group": "MCS",
+    "speciality": "Heat pumps and solar",
+    "description": "Illustrative energy installer. No genuine certification, quotation or booking is offered.",
+    "accreditation": "For the Boiler Upgrade Scheme, use an appropriately MCS-certified installer. Check certification for the relevant technology; this fictional listing is not certified.",
+    "source": "https://www.gov.uk/apply-boiler-upgrade-scheme/how-to-apply",
+    "checked": "2026-11-08",
+    "verified": false,
+    "isFictional": true
+  },
+  {
+    "id": "flood",
+    "name": "Example (fictional) · Valley Resilience Works",
+    "group": "CIRIA Code of Practice",
+    "speciality": "Property flood resilience",
+    "description": "Illustrative flood-resilience survey and installation provider. No work is commissioned through this demo.",
+    "accreditation": "CIRIA publishes a Code of Practice for property flood resilience. Ask a real provider how its work follows the current code; this is guidance, not a claim of CIRIA accreditation. Team to verify current names and requirements.",
+    "source": "https://ciria.org/Resources/Free_publications/CoP_for_PFR_resource.aspx",
+    "checked": "2026-11-08",
+    "verified": false,
+    "isFictional": true
+  }
+]

@@ -1,0 +1,356 @@
+[
+  {
+    "id": "groundsure",
+    "name": "Groundsure ClimateIndex",
+    "description": "Property-specific physical and transition risk ratings, with EPC and flood-mitigation guidance.",
+    "cells": {
+      "buildingRisk": {
+        "status": "partial",
+        "note": "Property-specific ratings; detailed building-factor treatment is not confirmed by this page.",
+        "source": "https://www.groundsure.com/climateindex/",
+        "checked": "2026-11-08",
+        "verified": true
+      },
+      "scenarios2050": {
+        "status": "partial",
+        "note": "Published future horizons are 5 and 30 years; not an exact like-for-like ARKRA 2050 comparison.",
+        "source": "https://www.groundsure.com/climateindex/",
+        "checked": "2026-11-08",
+        "verified": true
+      },
+      "costedPlan": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.groundsure.com/climateindex/",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "financeLink": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.groundsure.com/climateindex/",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "verifiedRecord": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.groundsure.com/climateindex/",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "lenderView": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.groundsure.com/climateindex/",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "communityView": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.groundsure.com/climateindex/",
+        "checked": "2026-11-08",
+        "verified": false
+      }
+    },
+    "source": "https://www.groundsure.com/climateindex/",
+    "checked": "2026-11-08",
+    "verified": false
+  },
+  {
+    "id": "climate-x",
+    "name": "Climate X Spectra",
+    "description": "Asset and portfolio physical risk, monetary losses and transition costs including EPC, with scenarios to 2100.",
+    "cells": {
+      "buildingRisk": {
+        "status": "✓",
+        "note": "Asset-level physical damage modelling combines hazards, exposure and vulnerability.",
+        "source": "https://www.climate-x.com/clx-dev/why",
+        "checked": "2026-11-08",
+        "verified": true
+      },
+      "scenarios2050": {
+        "status": "✓",
+        "note": "Multiple emissions pathways over 2020–2100, with intervals including the 2050 horizon.",
+        "source": "https://www.climate-x.com/clx-dev/why",
+        "checked": "2026-11-08",
+        "verified": true
+      },
+      "costedPlan": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.climate-x.com/clx-dev/why",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "financeLink": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.climate-x.com/clx-dev/why",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "verifiedRecord": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.climate-x.com/clx-dev/why",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "lenderView": {
+        "status": "✓",
+        "note": "Portfolio physical-risk scoring and monetary-loss outputs are described.",
+        "source": "https://www.climate-x.com/clx-dev/why",
+        "checked": "2026-11-08",
+        "verified": true
+      },
+      "communityView": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.climate-x.com/clx-dev/why",
+        "checked": "2026-11-08",
+        "verified": false
+      }
+    },
+    "source": "https://www.climate-x.com/clx-dev/why",
+    "checked": "2026-11-08",
+    "verified": false
+  },
+  {
+    "id": "halifax",
+    "name": "Halifax / Lloyds green living tools",
+    "description": "Energy guidance and Green Living Reward for qualifying mortgage customers; check current terms.",
+    "cells": {
+      "buildingRisk": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.halifax-intermediaries.co.uk/sustainability/green-living-reward.html",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "scenarios2050": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.halifax-intermediaries.co.uk/sustainability/green-living-reward.html",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "costedPlan": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.halifax-intermediaries.co.uk/sustainability/green-living-reward.html",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "financeLink": {
+        "status": "✓",
+        "note": "Conditional cashback for qualifying energy improvements; check current terms.",
+        "source": "https://www.halifax-intermediaries.co.uk/sustainability/green-living-reward.html",
+        "checked": "2026-11-08",
+        "verified": true
+      },
+      "verifiedRecord": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.halifax-intermediaries.co.uk/sustainability/green-living-reward.html",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "lenderView": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.halifax-intermediaries.co.uk/sustainability/green-living-reward.html",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "communityView": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.halifax-intermediaries.co.uk/sustainability/green-living-reward.html",
+        "checked": "2026-11-08",
+        "verified": false
+      }
+    },
+    "source": "https://www.halifax-intermediaries.co.uk/sustainability/green-living-reward.html",
+    "checked": "2026-11-08",
+    "verified": false
+  },
+  {
+    "id": "flood-re",
+    "name": "Flood Re Build Back Better",
+    "description": "Conditional post-claim resilience funding through participating insurers.",
+    "cells": {
+      "buildingRisk": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.floodre.co.uk/faq/some-policies-offer-cover-for-resilient-repairs-will-flood-re-handle-these/",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "scenarios2050": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.floodre.co.uk/faq/some-policies-offer-cover-for-resilient-repairs-will-flood-re-handle-these/",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "costedPlan": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.floodre.co.uk/faq/some-policies-offer-cover-for-resilient-repairs-will-flood-re-handle-these/",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "financeLink": {
+        "status": "✓",
+        "note": "Participating insurers may reimburse resilience work up to £10,000 over and above flood-damage repairs; insurer limits apply.",
+        "source": "https://www.floodre.co.uk/faq/some-policies-offer-cover-for-resilient-repairs-will-flood-re-handle-these/",
+        "checked": "2026-11-08",
+        "verified": true
+      },
+      "verifiedRecord": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.floodre.co.uk/faq/some-policies-offer-cover-for-resilient-repairs-will-flood-re-handle-these/",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "lenderView": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.floodre.co.uk/faq/some-policies-offer-cover-for-resilient-repairs-will-flood-re-handle-these/",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "communityView": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.floodre.co.uk/faq/some-policies-offer-cover-for-resilient-repairs-will-flood-re-handle-these/",
+        "checked": "2026-11-08",
+        "verified": false
+      }
+    },
+    "source": "https://www.floodre.co.uk/faq/some-policies-offer-cover-for-resilient-repairs-will-flood-re-handle-these/",
+    "checked": "2026-11-08",
+    "verified": false
+  },
+  {
+    "id": "snugg",
+    "name": "Snugg",
+    "description": "Home energy-improvement planning, costs, grants and finance.",
+    "cells": {
+      "buildingRisk": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.snugg.com/",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "scenarios2050": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.snugg.com/",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "costedPlan": {
+        "status": "✓",
+        "note": "Personalised improvement costs and monthly energy effects are described.",
+        "source": "https://www.snugg.com/",
+        "checked": "2026-11-08",
+        "verified": true
+      },
+      "financeLink": {
+        "status": "✓",
+        "note": "Grants, loans and finance options are incorporated into improvement costs.",
+        "source": "https://www.snugg.com/",
+        "checked": "2026-11-08",
+        "verified": true
+      },
+      "verifiedRecord": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.snugg.com/",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "lenderView": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.snugg.com/",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "communityView": {
+        "status": "to check",
+        "note": "Not established by this source; the team should verify.",
+        "source": "https://www.snugg.com/",
+        "checked": "2026-11-08",
+        "verified": false
+      }
+    },
+    "source": "https://www.snugg.com/",
+    "checked": "2026-11-08",
+    "verified": false
+  },
+  {
+    "id": "arkra",
+    "name": "ARKRA · demo product",
+    "description": "Illustrative joined journey from climate check to plan, funding, passport and lender impact.",
+    "cells": {
+      "buildingRisk": {
+        "status": "✓",
+        "note": "Implemented or proposed in this demo; no calibrated assessment, actual finance or independent verification service.",
+        "source": "ARKRA product brief · supplied by the team",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "scenarios2050": {
+        "status": "✓",
+        "note": "Implemented or proposed in this demo; no calibrated assessment, actual finance or independent verification service.",
+        "source": "ARKRA product brief · supplied by the team",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "costedPlan": {
+        "status": "✓",
+        "note": "Implemented or proposed in this demo; no calibrated assessment, actual finance or independent verification service.",
+        "source": "ARKRA product brief · supplied by the team",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "financeLink": {
+        "status": "✓",
+        "note": "Implemented or proposed in this demo; no calibrated assessment, actual finance or independent verification service.",
+        "source": "ARKRA product brief · supplied by the team",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "verifiedRecord": {
+        "status": "✓",
+        "note": "Implemented or proposed in this demo; no calibrated assessment, actual finance or independent verification service.",
+        "source": "ARKRA product brief · supplied by the team",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "lenderView": {
+        "status": "✓",
+        "note": "Implemented or proposed in this demo; no calibrated assessment, actual finance or independent verification service.",
+        "source": "ARKRA product brief · supplied by the team",
+        "checked": "2026-11-08",
+        "verified": false
+      },
+      "communityView": {
+        "status": "✓",
+        "note": "Implemented or proposed in this demo; no calibrated assessment, actual finance or independent verification service.",
+        "source": "ARKRA product brief · supplied by the team",
+        "checked": "2026-11-08",
+        "verified": false
+      }
+    },
+    "source": "ARKRA product brief · supplied by the team",
+    "checked": "2026-11-08",
+    "verified": false
+  }
+]

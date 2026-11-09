@@ -1,0 +1,61 @@
+[
+  {
+    "id": "bus",
+    "name": "Boiler Upgrade Scheme",
+    "provider": "UK Government",
+    "amount": 7500,
+    "oilLpgAmount": 9000,
+    "eligibility": "England or Wales; eligible replacement heating and installation. Oil/LPG uplift requires an eligible off-gas-grid property. Confirm with an MCS installer.",
+    "applies_to": ["heatPump"],
+    "source": "https://www.gov.uk/apply-boiler-upgrade-scheme",
+    "checked": "2026-11-08",
+    "verified": false
+  },
+  {
+    "id": "halifax",
+    "name": "Halifax Green Living Reward \u00b7 check current terms",
+    "provider": "Lloyds Banking Group",
+    "amount": 2000,
+    "solarAmount": 1000,
+    "otherAmount": 500,
+    "eligibility": "Eligible Halifax mortgage customer and qualifying improvement; one reward only. Confirm current terms and compatibility.",
+    "applies_to": ["heatPump", "solarBattery", "insulation", "coolRoof"],
+    "source": "https://www.halifax.co.uk/mortgages/help-and-advice/green-living/green-living-offers.html",
+    "checked": "2026-11-08",
+    "verified": false
+  },
+  {
+    "id": "bbb",
+    "name": "Flood Re Build Back Better",
+    "provider": "Participating insurer",
+    "amount": 10000,
+    "eligibility": "Only after a flood claim, through a participating insurer, as part of approved repairs. Not upfront funding.",
+    "applies_to": [
+      "floodBarriers",
+      "nonReturn",
+      "airbricks",
+      "resilient",
+      "sumpPump"
+    ],
+    "source": "https://www.floodre.co.uk/buildbackbetter/",
+    "checked": "2026-11-08",
+    "verified": false
+  },
+  {
+    "id": "council",
+    "name": "Property flood resilience grants",
+    "provider": "Local authority",
+    "amount": 5000,
+    "eligibility": "Sometimes available after named floods; ask your council. Cannot assume compatibility with insurer funding.",
+    "applies_to": [
+      "floodBarriers",
+      "nonReturn",
+      "airbricks",
+      "resilient",
+      "sumpPump"
+    ],
+    "source": "https://www.gov.uk/government/news/government-payments-for-communities-affected-by-flooding",
+    "checked": "2026-11-08",
+    "verified": false
+  }
+]

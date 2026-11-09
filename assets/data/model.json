@@ -1,0 +1,101 @@
+{
+  "worstShare": 0.7,
+  "meanShare": 0.3,
+  "measureFloor": 0.4,
+  "uncertainty": 0.1,
+  "scoreBands": [
+    ["A", 0, 19, "Very low"],
+    ["B", 20, 39, "Low"],
+    ["C", 40, 59, "Moderate"],
+    ["D", 60, 79, "High"],
+    ["E", 80, 100, "Very high"]
+  ],
+  "epcBands": [
+    ["A", 92],
+    ["B", 81],
+    ["C", 69],
+    ["D", 55],
+    ["E", 39],
+    ["F", 21],
+    ["G", 1]
+  ],
+  "sapGains": {
+    "coolRoof": 4,
+    "heatPump": 12,
+    "solarBattery": 8,
+    "insulation": 10
+  },
+  "apr": 6,
+  "term": 10,
+  "maxPlanCost": 15000,
+  "maxMeasures": 3,
+  "portfolioSeed": 2026,
+  "portfolioSize": 1000,
+  "valueMin": 120000,
+  "valueMax": 900000,
+  "ltvMin": 0.4,
+  "ltvMax": 0.9,
+  "heatThresholds": [0.25, 0.5, 0.75],
+  "drought": "Hotter, drier summers raise shrink\u2013swell movement on clay soils",
+  "source": "ARKRA modelling assumption \u00b7 supplied Sustainathon brief",
+  "verified": false,
+  "sapMin": 35,
+  "sapSpread": 55,
+  "portfolioTreeProbability": 0.25,
+  "portfolioGlazingProbability": 0.2,
+  "regionValues": {
+    "Calder Valley, West Yorkshire": [120000, 400000],
+    "Severn floodplain, Gloucestershire": [180000, 650000],
+    "South East London": [300000, 900000],
+    "North Norfolk coast": [180000, 600000],
+    "Stratford, East London": [250000, 800000],
+    "Milton Keynes": [200000, 600000],
+    "Hackney, East London": [350000, 900000]
+  },
+  "assumedUncertainty": 0.2,
+  "streetSize": 14,
+  "streetSeed": 419,
+  "streetSharedHighCount": 9,
+  "defaultUptake": 30,
+  "defaultVerification": 60,
+  "remortgageMax": 60,
+  "insuranceMax": 11,
+  "claimProbability": 0.08,
+  "unknownHazards": {
+    "riverSea": "low",
+    "surfaceWater": "low",
+    "subsidence": "B",
+    "coastal": "none",
+    "heat": "medium"
+  },
+  "checkDefaults": {
+    "sap": 60,
+    "value": 250000,
+    "rebuildCost": 180000,
+    "floorArea": 85
+  },
+  "checkRegions": [
+    {
+      "id": "yorkshire",
+      "name": "Yorkshire & the North",
+      "heat": "low"
+    },
+    {
+      "id": "midlands",
+      "name": "Midlands",
+      "heat": "medium"
+    },
+    {
+      "id": "southwest",
+      "name": "South West",
+      "heat": "medium"
+    },
+    {
+      "id": "london",
+      "name": "London, South East & East",
+      "heat": "high"
+    }
+  ],
+  "snapshotDate": "2026-11-08",
+  "passportStatuses": ["planned", "booked", "installed", "verified"]
+}

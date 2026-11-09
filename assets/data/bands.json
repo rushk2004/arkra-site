@@ -1,0 +1,58 @@
+[
+  {
+    "id": "riverSea",
+    "values": {
+      "very-low": 0.03,
+      "low": 0.2,
+      "medium": 0.5,
+      "high": 0.8
+    },
+    "source": "ARKRA modelling assumption \u00b7 supplied Sustainathon brief",
+    "verified": false
+  },
+  {
+    "id": "surfaceWater",
+    "values": {
+      "very-low": 0.03,
+      "low": 0.2,
+      "medium": 0.5,
+      "high": 0.8
+    },
+    "source": "ARKRA modelling assumption \u00b7 supplied Sustainathon brief",
+    "verified": false
+  },
+  {
+    "id": "subsidence",
+    "values": {
+      "A": 0.02,
+      "B": 0.1,
+      "C": 0.3,
+      "D": 0.55,
+      "E": 0.8
+    },
+    "source": "ARKRA modelling assumption \u00b7 supplied Sustainathon brief",
+    "verified": false
+  },
+  {
+    "id": "coastal",
+    "values": {
+      "none": 0,
+      "coast": 0.05,
+      "z100": 0.35,
+      "z50": 0.7,
+      "z20": 0.95
+    },
+    "source": "ARKRA modelling assumption \u00b7 supplied Sustainathon brief",
+    "verified": false
+  },
+  {
+    "id": "heat",
+    "values": {
+      "low": 0.12,
+      "medium": 0.3,
+      "high": 0.5
+    },
+    "source": "ARKRA modelling assumption \u00b7 supplied Sustainathon brief",
+    "verified": false
+  }
+]

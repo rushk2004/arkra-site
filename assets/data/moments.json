@@ -1,0 +1,71 @@
+[
+  {
+    "id": "remortgage",
+    "name": "Remortgage or product switch",
+    "trigger": "Deal ends within 6 months",
+    "nudge": "Fit measures before you switch: they may qualify for lender cashback. Check current terms.",
+    "why": "You are already talking to your lender.",
+    "cta": "Explore your plan",
+    "page": "plan",
+    "threshold": 6,
+    "source": "ARKRA product demo assumption \u00b7 team brief, 8 November 2026",
+    "verified": false
+  },
+  {
+    "id": "buying",
+    "name": "Buying a home",
+    "trigger": "New profile from a purchase",
+    "nudge": "See this home\u2019s climate risk before you commit.",
+    "why": "A home purchase is a moment to plan ahead.",
+    "cta": "Understand the risk",
+    "page": "home",
+    "source": "ARKRA product demo assumption \u00b7 team brief, 8 November 2026",
+    "verified": false
+  },
+  {
+    "id": "insurance",
+    "name": "Insurance renewal",
+    "trigger": "Renewal within 2 months",
+    "nudge": "Show your Home Resilience Passport to your insurer. It records the work you have done.",
+    "why": "A timely conversation about insurability.",
+    "cta": "Open your passport",
+    "page": "passport",
+    "threshold": 2,
+    "source": "ARKRA product demo assumption \u00b7 team brief, 8 November 2026",
+    "verified": false
+  },
+  {
+    "id": "claim",
+    "name": "After a flood claim",
+    "trigger": "Recent flood claim",
+    "nudge": "Your insurer may pay up to \u00a310,000 for resilience through Flood Re\u2019s Build Back Better scheme, if it takes part. Check current terms.",
+    "why": "Resilience can be installed while repairs happen.",
+    "cta": "Build a practical plan",
+    "page": "plan",
+    "source": "ARKRA product demo assumption \u00b7 team brief, 8 November 2026",
+    "verified": false
+  },
+  {
+    "id": "warning",
+    "name": "Flood or heat warning",
+    "trigger": "Demo warning toggle",
+    "nudge": "Check warnings. Move valuables upstairs if flooding threatens. Keep rooms shaded and check on vulnerable neighbours in hot weather.",
+    "why": "Small timely actions can reduce disruption.",
+    "cta": "See shared options",
+    "page": "community",
+    "source": "ARKRA product demo assumption \u00b7 team brief, 8 November 2026",
+    "verified": false
+  },
+  {
+    "id": "epc",
+    "name": "EPC expiring",
+    "trigger": "EPC older than 10 years",
+    "nudge": "Get a new EPC to see your progress and update your record.",
+    "why": "A fresh certificate can evidence improvement.",
+    "cta": "Review energy readiness",
+    "page": "home",
+    "threshold": 10,
+    "source": "ARKRA product demo assumption \u00b7 team brief, 8 November 2026",
+    "verified": false
+  }
+]

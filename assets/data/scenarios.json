@@ -1,0 +1,41 @@
+[
+  {
+    "id": "today",
+    "name": "Today",
+    "uplifts": {
+      "riverSea": 1,
+      "surfaceWater": 1,
+      "subsidence": 1,
+      "coastal": 1,
+      "heat": 1
+    },
+    "source": "ARKRA modelling assumption \u00b7 supplied Sustainathon brief",
+    "verified": false
+  },
+  {
+    "id": "medium",
+    "name": "2050 medium",
+    "uplifts": {
+      "riverSea": 1.15,
+      "surfaceWater": 1.2,
+      "subsidence": 1.2,
+      "coastal": 1.25,
+      "heat": 1.35
+    },
+    "source": "ARKRA modelling assumption \u00b7 supplied Sustainathon brief",
+    "verified": false
+  },
+  {
+    "id": "high",
+    "name": "2050 high",
+    "uplifts": {
+      "riverSea": 1.3,
+      "surfaceWater": 1.4,
+      "subsidence": 1.35,
+      "coastal": 1.4,
+      "heat": 1.6
+    },
+    "source": "ARKRA modelling assumption \u00b7 supplied Sustainathon brief",
+    "verified": false
+  }
+]
