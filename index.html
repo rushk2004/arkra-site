@@ -1,31 +1,123 @@
 <!doctype html>
 <html lang="en-GB">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta
-      name="description"
-      content="Understand your home’s climate risks and build a practical, funded resilience plan. ARKRA demo product."
-    />
-    <meta name="theme-color" content="#102d3b" />
-    <title>ARKRA · A better-prepared home</title>
-    <link rel="icon" href="data:," />
-    <link rel="stylesheet" href="./assets/css/arkra.css?v=3" />
-  </head>
-  <body data-page="overview">
-    <a class="skip" href="#main">Skip to content</a>
-    <div id="header"></div>
-    <main id="main">
-      <section class="card">
-        <h1>A better-prepared home starts here.</h1>
-        <p>Loading your ARKRA demo…</p>
-        <noscript
-          >Enable JavaScript to explore this interactive demo. No information is
-          sent.</noscript
-        >
-      </section>
-    </main>
-    <div id="footer"></div>
-    <script type="module" src="./assets/js/app.js?v=3"></script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ARKRA is a concept for a resilience-linked home. Know the risk, fund the work and earn a reward for verified improvements.">
+  <meta name="theme-color" content="#f7f8f1">
+  <title>ARKRA · The Resilience-Linked Home</title>
+  <link rel="icon" href="assets/arkra-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/resilience.css">
+  <script type="module" src="assets/resilience.js"></script>
+</head>
+<body>
+  <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M6 18 18 6M8 6h10v10"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v9H3Zm6 9v-6h6v6"/></symbol>
+    <symbol id="i-wave" viewBox="0 0 24 24"><path d="M2 7c3 0 3-2 5-2s3 2 5 2 3-2 5-2 3 2 5 2M2 12c3 0 3-2 5-2s3 2 5 2 3-2 5-2 3 2 5 2M2 17c3 0 3-2 5-2s3 2 5 2 3-2 5-2 3 2 5 2"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M19 5l-2 2M7 17l-2 2"/></symbol>
+    <symbol id="i-ground" viewBox="0 0 24 24"><path d="M3 7h18M3 12h7l2 3 3-3h6M3 18h18"/></symbol>
+    <symbol id="i-wind" viewBox="0 0 24 24"><path d="M3 8h12a3 3 0 1 0-3-3M3 12h16a2 2 0 1 1-2 2M3 16h9a3 3 0 1 1-3 3"/></symbol>
+    <symbol id="i-coast" viewBox="0 0 24 24"><path d="M3 19h18M3 15l4-2 4 2 5-2 5 2M3 9h6l4-5 5 8"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3c4 6 7 9 7 13a7 7 0 1 1-14 0c0-4 3-7 7-13Z"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="m13 2-9 12h7l-1 8 10-12h-7z"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><path d="M4 4h16v16H4zM4 12h16M12 4v16"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20 5a5 5 0 0 0-8 2 5 5 0 0 0-8-2c-5 5 1 10 8 16 7-6 13-11 8-16Z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22S4 18 4 10V5l8-3 8 3v5c0 8-8 12-8 12Zm-3-11 2 2 4-4"/></symbol>
+    <symbol id="i-plan" viewBox="0 0 24 24"><path d="M5 3h14v18H5zM8 8h8m-8 4h8m-8 4h5"/></symbol>
+    <symbol id="i-reward" viewBox="0 0 24 24"><path d="M4 17l6-6 4 4 6-9m-6 0h6v6"/></symbol>
+    <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3m1-17a3 3 0 1 1 0 6m2 3a5 5 0 0 1 3 5v3"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><path d="M5 10h14v11H5zm3 0V7a4 4 0 0 1 8 0v3m-4 4v3"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  </svg>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="header">
+    <div class="wrap nav">
+      <a href="#top" class="brand" aria-label="ARKRA home"><img src="assets/arkra-logo.png" alt="" width="615" height="544"><span>ARKRA<small>THE RESILIENCE-LINKED HOME</small></span></a>
+      <nav aria-label="Main navigation"><a href="#idea">The idea</a><a href="#demo">The demo</a><a href="#roadmap">Roadmap</a></nav>
+      <a class="button primary nav-cta" href="#demo">Try the demo <svg><use href="#i-up"/></svg></a>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero wrap" id="top" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="live-dot"></span> A CONCEPT FOR CLIMATE-READY HOMES</span>
+        <h1 id="hero-title">A safer home.<br><em>A fairer deal.</em></h1>
+        <p>Meet the Resilience-Linked Home. See what your home faces, find the money to make it safer, and see how verified improvements could earn a reward.</p>
+        <div class="actions"><a class="button primary" href="#demo">Explore the live demo <svg><use href="#i-arrow"/></svg></a><a class="button plain" href="#idea">How it works</a></div>
+        <div class="hero-note"><svg><use href="#i-shield"/></svg> Built around a no-climate-penalty pledge</div>
+      </div>
+      <figure class="hero-visual">
+        <img src="assets/climate-home.svg" alt="Architectural illustration of a home with flood protection, solar panels and a heat pump" width="720" height="535" fetchpriority="high">
+        <div class="figure-label"><span class="live-dot"></span> HOME CLIMATE TWIN <span>01 / ARKRA</span></div>
+        <div class="floating flood-float"><span class="icon-box"><svg><use href="#i-wave"/></svg></span><div><small>FLOOD RESILIENCE</small><strong><b class="grade grade-d">D</b> <span>→</span> <b class="grade grade-b">B</b></strong></div></div>
+        <div class="floating funding-float"><span class="icon-box"><svg><use href="#i-plan"/></svg></span><div><small>CASH NEEDED UPFRONT</small><strong>£8,500</strong></div></div>
+        <figcaption>Illustrative home and plan</figcaption>
+      </figure>
+    </section>
+    <section class="principle" aria-label="The Resilience Dividend">
+      <div class="wrap principle-inner"><span class="principle-icon"><svg><use href="#i-reward"/></svg></span><div><strong>Safer homes can cost less to protect.</strong><p>The Resilience Dividend shares a portion of the modelled saving with the people who made the improvements.</p></div><a href="#reward">See the Dividend <svg><use href="#i-arrow"/></svg></a></div>
+    </section>
+    <section class="wrap idea" id="idea">
+      <div class="section-heading"><span class="eyebrow">THE ARKRA ECOSYSTEM</span><h2>Five parts. One safer home.</h2><p>Start at remortgage with a climate twin and a costed plan. Build towards a service that rewards prevention, helps during warnings and brings neighbours together.</p></div>
+      <div class="pillar-grid">
+        <a href="#twin" class="pillar"><span>01</span><svg><use href="#i-home"/></svg><h3>Know</h3><p>See today’s risks and what may change by 2050.</p></a>
+        <a href="#plan" class="pillar"><span>02</span><svg><use href="#i-plan"/></svg><h3>Plan &amp; pay</h3><p>Find the cash you need before cashback lands.</p></a>
+        <a href="#reward" class="pillar"><span>03</span><svg><use href="#i-reward"/></svg><h3>Reward</h3><p>Turn verified work into a potential Dividend.</p></a>
+        <a href="#protect" class="pillar"><span>04</span><svg><use href="#i-shield"/></svg><h3>Protect</h3><p>See how Storm Mode could help during a warning.</p></a>
+        <a href="#street" class="pillar"><span>05</span><svg><use href="#i-people"/></svg><h3>Together</h3><p>Pool the work a single household cannot do alone.</p></a>
+      </div>
+    </section>
+    <section class="demo-section" id="demo">
+      <div class="wrap">
+        <div class="section-heading"><span class="eyebrow">INTERACTIVE PROTOTYPE</span><h2>Follow a household.</h2><p>Take a three-minute journey from a postcode check to a costed plan, a verified improvement and a simulated warning.</p></div>
+        <div class="workspace">
+          <aside class="workspace-nav" aria-label="Demo navigation">
+            <div class="workspace-brand"><span class="live-dot"></span> ARKRA WORKSPACE</div>
+            <label class="household-label" for="household">Example household</label>
+            <select id="household"><option value="sam">Sam &amp; Leah</option><option value="priya">Priya</option><option value="margaret">Margaret</option></select>
+            <div id="household-context"></div>
+            <nav aria-label="Journey steps">
+              <a href="#twin" data-step="twin"><svg><use href="#i-home"/></svg> Climate twin <small>01</small></a>
+              <a href="#plan" data-step="plan"><svg><use href="#i-plan"/></svg> Plan &amp; funding <small>02</small></a>
+              <a href="#reward" data-step="reward"><svg><use href="#i-reward"/></svg> Resilience Dividend <small>03</small></a>
+              <a href="#protect" data-step="protect"><svg><use href="#i-shield"/></svg> Storm Mode <small>04</small></a>
+              <a href="#street" data-step="street"><svg><use href="#i-people"/></svg> Street schemes <small>05</small></a>
+            </nav>
+            <div class="workspace-note"><svg><use href="#i-lock"/></svg><span>Demo activity stays in this browser session.</span></div>
+          </aside>
+          <div class="workspace-body" id="panel"><noscript><p>Enable JavaScript to try the interactive demo.</p></noscript></div>
+        </div>
+      </div>
+    </section>
+    <section class="wrap promise" id="pledge">
+      <div class="promise-lead"><span class="eyebrow">THE ARKRA PLEDGE</span><h2>No climate penalty.</h2><p>A home with higher risk should get more help. A verified improvement can unlock a reward.</p></div>
+      <ul>
+        <li><svg><use href="#i-shield"/></svg><div><strong>Reward-only pricing</strong><p>A rating alone would never be used to decline a mortgage or increase a rate or premium.</p></div></li>
+        <li><svg><use href="#i-check"/></svg><div><strong>Open to challenge</strong><p>Households can see sources, correct data and withdraw consent for optional sensors.</p></div></li>
+        <li><svg><use href="#i-heart"/></svg><div><strong>Help on your terms</strong><p>Phone, branch and assisted home visits sit alongside the digital journey.</p></div></li>
+      </ul>
+    </section>
+    <section class="roadmap" id="roadmap">
+      <div class="wrap">
+        <div class="section-heading"><span class="eyebrow">ROADMAP TO 2039</span><h2>Start at remortgage. Earn the next step.</h2><p>The pilot tests whether lower claims, lower credit losses and customer retention can fund the proposed reward.</p></div>
+        <div class="timeline">
+          <article><span>2026–27 · PILOT</span><h3>Know and fund</h3><p>Test the twin, ranked plan and funding gap with flood-prone households at remortgage.</p></article>
+          <article><span>2028–30 · REWARD</span><h3>Test the Dividend</h3><p>Trial evidence checks and reward economics. Extend the journey to landlords and renters.</p></article>
+          <article><span>2030–34 · PROTECT</span><h3>Act before damage</h3><p>Pilot consented Storm Mode, assisted outreach and street schemes with local partners.</p></article>
+          <article><span>2035–39 · STANDARD</span><h3>Make proof portable</h3><p>Share a trusted record at sale and prepare for Flood Re’s scheduled exit in 2039.</p></article>
+        </div>
+        <p class="roadmap-source"><a href="https://www.floodre.co.uk/our-future/">Flood Re’s transition plans <svg><use href="#i-up"/></svg></a></p>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="wrap footer-inner"><a href="#top" class="brand"><img src="assets/arkra-logo.png" alt="" width="615" height="544"><span>ARKRA<small>THE RESILIENCE-LINKED HOME</small></span></a><p>Independent concept for the Lloyds innovation challenge. Prototype scenarios and rewards are illustrative.</p><a href="#demo">Back to demo ↑</a></div>
+  </footer>
+</body>
 </html>
