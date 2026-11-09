@@ -256,3 +256,16 @@ input[type="checkbox"] { accent-color: var(--green); min-width: 15px; height: 15
   .storm-actions { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* ARKRA Loan Offer (demo) */
+.loan-card { margin-top: 12px; background: white; }
+.loan-card .panel-head { margin-bottom: 4px; }
+.loan-term { display: grid; gap: 4px; justify-items: start; }
+.loan-compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 8px; }
+.loan-option { border: 1px solid var(--line); border-radius: 10px; padding: 13px; background: #fafbf7; }
+.loan-option.current { background: #edf5e9; border-color: #b9d3bd; }
+.loan-option strong { display: block; margin-top: 4px; font: 800 clamp(1.4rem, 3vw, 2rem)/1.15 Manrope, sans-serif; letter-spacing: -.03em; }
+.loan-option strong small { font: 600 .74rem "DM Sans", sans-serif; color: var(--muted); letter-spacing: 0; }
+.loan-option p { margin: 4px 0 0; font-size: .76rem; }
+.loan-summary { margin: 12px 0 4px; font-size: .86rem; color: var(--ink); }
+@media (max-width: 650px) { .loan-compare { grid-template-columns: 1fr; } }

@@ -97,3 +97,33 @@ export function postcodeRecord(shard, compact) {
   const [, high, medium, low, groundwater] = row.split(",");
   return { high: Number(high), medium: Number(medium), low: Number(low), groundwater: { P: "Possible", U: "Unlikely" }[groundwater] || "Unknown" };
 }
+
+// ---- ARKRA Loan Offer (demo) ----
+// Hypothetical rates: the standard rate is not a risk surcharge; verified work unlocks a lower rate.
+export const loanTerms = [3, 5, 7];
+export const loanRates = { standard: 7.0, verified: 6.0 };
+
+export const verifyMonthsOptions = [3, 6, 12];
+
+export function loanPaymentMonths(amount, rate, months) {
+  if (amount <= 0 || months <= 0) return 0;
+  const monthly = rate / 1200;
+  return monthly === 0 ? amount / months : amount * monthly / (1 - (1 + monthly) ** -months);
+}
+
+export function loanPayment(amount, rate, years) {
+  return loanPaymentMonths(amount, rate, years * 12);
+}
+
+// The lower rate applies only from the month AFTER verification, on the balance still outstanding.
+export function loanOffer(amount, years, verifyMonths = 6) {
+  const months = years * 12;
+  const k = Math.min(Math.max(0, verifyMonths), months - 1);
+  const r = loanRates.standard / 1200;
+  const before = loanPaymentMonths(amount, loanRates.standard, months);
+  const balanceAtVerification = amount * (1 + r) ** k - before * ((1 + r) ** k - 1) / r;
+  const after = loanPaymentMonths(balanceAtVerification, loanRates.verified, months - k);
+  const interestBefore = before * months - amount;
+  const interestAfter = before * k + after * (months - k) - amount;
+  return { amount, years, verifyMonths: k, balanceAtVerification, before, after, monthlySaving: before - after, interestBefore, interestAfter, interestSaving: interestBefore - interestAfter };
+}
