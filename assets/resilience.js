@@ -1,4 +1,4 @@
-import { dividend, hazards, households, measures, normalisePostcode, planCosts, postcodeRecord, resilienceGrade, sources } from "./model.js";
+import { dividend, hazards, households, loanOffer, loanRates, loanTerms, measures, verifyMonthsOptions, normalisePostcode, planCosts, postcodeRecord, resilienceGrade, sources } from "./model.js";
 
 const panel = document.querySelector("#panel");
 const householdInput = document.querySelector("#household");
@@ -12,6 +12,8 @@ const icon = (id) => `<svg aria-hidden="true"><use href="#i-${id}"/></svg>`;
 const link = (url, title) => `<a href="${url}" target="_blank" rel="noopener">${title}</a>`;
 const next = (step, text) => `<a class="button primary" href="#${step}">${text} ${icon("arrow")}</a>`;
 const money = (amount) => pounds.format(amount);
+const poundsExact = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const moneyExact = (amount) => poundsExact.format(amount);
 const grade = (value) => `<span class="grade grade-${value?.toLowerCase() || "unknown"}">${value || "?"}</span>`;
 const heading = (kicker, title, subtitle, status) => `<div class="panel-head"><div><span class="eyebrow">${kicker}</span><h3 id="step-title" tabindex="-1">${title}</h3><p>${subtitle}</p></div><span class="badge neutral">${status}</span></div>`;
 
@@ -25,7 +27,7 @@ function startHousehold(key) {
     household, selected: [...household.selected], savings: household.savings,
     grant: household.grant, cashback: household.cashback, horizon: 0, epc: "",
     verified: false, consent: false, assisted: household.assisted,
-    warning: "", claim: false, scheme: "drainage", joined: new Set(), landlord: false,
+    warning: "", claim: false, scheme: "drainage", joined: new Set(), landlord: false, loanOpen: false, loanYears: 5, loanVerifyMonths: 6,
   };
 }
 
@@ -127,7 +129,9 @@ function planPanel() {
           <label class="toggle"><input id="cashback" type="checkbox" ${data.cashback && hasPump ? "checked" : ""} ${hasPump && data.household.balance ? "" : "disabled"}> £2,000 Eco Home Reward after completion</label>
         </div>
         <div class="grant-sources">${link(sources.grant, "Grant amounts ↗")} ${link(sources.quote, "Quote timing ↗")} ${link(sources.cashback, "Cashback terms ↗")}</div>
+        <div id="loan-cta"></div>
       </section></div>
+    <div id="loan-offer" aria-live="polite"></div>
     <div class="notice">${data.household.role === "Renting" ? "<strong>For renters.</strong> Send the plan to the landlord for a decision on installation, funding and permissions." : "<strong>One proposed application.</strong> A further advance or retrofit loan could bridge the gap, subject to affordability. A pilot would use vetted installers and independent checks."}</div>
     ${data.household.role === "Renting" ? `<div class="panel-foot"><button type="button" class="button plain" data-action="landlord">Prepare landlord request</button></div>${data.landlord ? '<p class="notice">Request draft: Could we review the overheating in my flat and get a quote for external shading? The example plan also suggests agreeing a heat-warning routine. This is ready for you to copy and send.</p>' : ""}` : ""}
     <div class="panel-foot"><p class="small">Order shows selected measures first, then modelled risk reduction per pound. Figures assume eligibility when toggled.</p>${next("reward", "See the Dividend")}</div>`;
@@ -145,6 +149,42 @@ function showFunding() {
     <div><dt>Cashback after work</dt><dd>${money(costs.laterCashback)}</dd></div>
     <div><dt>Net gap after cashback</dt><dd>${money(costs.afterCashback)}</dd></div>
   </dl>`;
+  showLoan();
+}
+
+function showLoan(focusSelector) {
+  const cta = panel.querySelector("#loan-cta");
+  const slot = panel.querySelector("#loan-offer");
+  if (!cta || !slot) return;
+  const { gap, laterCashback } = planCosts(data.selected, data);
+  const renting = data.household.role === "Renting";
+  if (renting || gap <= 0) {
+    cta.innerHTML = "";
+    slot.innerHTML = "";
+    return;
+  }
+  cta.innerHTML = `<button type="button" class="button primary" data-action="loan" aria-expanded="${data.loanOpen}" style="width:100%;margin-top:13px">${data.loanOpen ? "Hide loan offer" : `Finance this plan · ${money(gap)}`} ${icon(data.loanOpen ? "lock" : "arrow")}</button>`;
+  if (!data.loanOpen) {
+    slot.innerHTML = "";
+    return;
+  }
+  const offer = loanOffer(gap, data.loanYears, data.loanVerifyMonths);
+  const verified = data.verified;
+  slot.innerHTML = `<section class="card loan-card" aria-label="ARKRA Loan Offer">
+    <div class="panel-head"><div><span class="eyebrow">PROPOSED FINANCING</span><h4>Your ARKRA Loan Offer</h4><p>Bridge the upfront gap. Verified improvements could unlock a lower rate.</p></div><span class="badge neutral">Demo</span></div>
+    <div class="section-row"><div class="stat"><span>Amount to finance</span><strong>${money(gap)}</strong></div>
+      <div class="loan-term"><span class="small" id="loan-term-label">Loan duration</span><div class="segments" role="group" aria-labelledby="loan-term-label">${loanTerms.map((years) => `<button type="button" data-term="${years}" aria-pressed="${data.loanYears === years}">${years} years</button>`).join("")}</div></div>
+      <div class="loan-term"><span class="small" id="loan-vm-label">Verified after</span><div class="segments" role="group" aria-labelledby="loan-vm-label">${verifyMonthsOptions.map((months) => `<button type="button" data-vm="${months}" aria-pressed="${data.loanVerifyMonths === months}">${months} months</button>`).join("")}</div></div></div>
+    <div class="loan-compare">
+      <div class="loan-option ${verified ? "" : "current"}"><span class="eyebrow">STANDARD RATE</span><strong>${moneyExact(offer.before)}<small> per month</small></strong><p>${loanRates.standard.toFixed(1)}% · ${money(offer.interestBefore)} total interest</p></div>
+      <div class="loan-option ${verified ? "current" : ""}"><span class="eyebrow">${verified ? "VERIFIED IN THIS DEMO" : "AFTER VERIFICATION"}</span><strong>${moneyExact(offer.after)}<small> per month</small></strong><p>${loanRates.verified.toFixed(1)}% from month ${offer.verifyMonths + 1} · ${money(offer.interestAfter)} total interest</p></div>
+    </div>
+    <p class="loan-summary">${verified ? `Rate unlocked. You pay the standard rate for ${offer.verifyMonths} months, then <strong>${moneyExact(offer.monthlySaving)} less each month</strong> on the ${money(offer.balanceAtVerification)} still owed.` : `Complete and verify your improvements to unlock the lower rate. If verified after ${offer.verifyMonths} months, payments on the ${money(offer.balanceAtVerification)} still owed fall by <strong>${moneyExact(offer.monthlySaving)} a month</strong>.`}</p>
+    <p><strong>Total loan interest saved: ${money(offer.interestSaving)}</strong> over the ${offer.years}-year loan.</p>
+    ${laterCashback ? `<p class="small">The ${money(laterCashback)} reward arrives after completion and could be used to repay part of the loan early.</p>` : ""}
+    <div class="panel-foot"><button type="button" class="button ${verified ? "plain" : "primary"}" data-action="verify">${verified ? "Reset demo verification" : "Simulate verified work"} ${icon(verified ? "lock" : "check")}</button><p class="small">Hypothetical rates and payments for demonstration only. The lower rate applies only from the month after verification, to the balance then outstanding. Subject to status and affordability. The standard rate is not a risk surcharge, and a pilot would test any reward.</p></div>
+  </section>`;
+  if (focusSelector) slot.querySelector(focusSelector)?.focus();
 }
 
 function rewardPanel() {
@@ -158,7 +198,7 @@ function rewardPanel() {
   const floodChanged = before !== after;
   const heatChanged = heatBefore !== heatAfter;
   return heading("03 / REWARD", "The Resilience Dividend", "See what changes when completed work is verified and the modelled loss falls.", "Proposed reward")
-    + `<div class="reward-hero"><div><span class="eyebrow">${verified ? "VERIFIED IN THIS DEMO" : "AWAITING DEMO VERIFICATION"}</span><strong>${verified ? `${money(model.total)} / year` : `${money(possible.total)} / year potential`}</strong><p>${data.household.role === "Renting" ? "A tenant can record safer conditions. Mortgage or insurance rewards depend on the policyholder and product." : "Illustrative annual mortgage repayment and insurance premium savings."}</p></div>${icon(verified ? "shield" : "lock")}</div>
+    + `<div class="reward-hero"><div><span class="eyebrow">${verified ? "VERIFIED IN THIS DEMO" : "AWAITING DEMO VERIFICATION"}</span><strong>${verified ? `${money(model.total)} / year` : `${money(possible.total)} / year potential`}</strong><p>${data.household.role === "Renting" ? "A tenant can record safer conditions. Mortgage or insurance rewards depend on the policyholder and product." : "Annual Dividend savings on mortgage repayments and insurance premiums."}</p></div>${icon(verified ? "shield" : "lock")}</div>
     <div class="split">
       <article class="card stat"><span>${heatChanged && !floodChanged ? "Overheating grade" : "Flood resilience"}</span><strong>${grade(heatChanged && !floodChanged ? heatBefore : before)} → ${grade(heatChanged && !floodChanged ? heatAfter : after)}</strong><p>${floodChanged || heatChanged ? "Grade updated after demo evidence check." : "Current modelled rating."}</p></article>
       <article class="card stat"><span>Next mortgage deal</span><strong>${!data.household.balance ? "Not applicable" : model.mortgage ? "4.50% → 4.40%" : "4.50%"}</strong><p>${model.mortgage ? `${money(model.mortgage)}/yr example repayment saving.` : "A lower rate would only apply to a qualifying next deal."}</p></article>
@@ -248,11 +288,21 @@ panel.addEventListener("submit", (event) => {
 panel.addEventListener("click", (event) => {
   const button = event.target.closest("button");
   if (!button) return;
-  const { action, horizon, warning } = button.dataset;
+  const { action, horizon, warning, term, vm } = button.dataset;
   if (horizon !== undefined) {
     data.horizon = Number(horizon);
     panel.querySelector("#hazards").innerHTML = ratingCards();
     panel.querySelectorAll("[data-horizon]").forEach(control => control.setAttribute("aria-pressed", String(control === button)));
+    return;
+  }
+  if (term !== undefined) {
+    data.loanYears = Number(term);
+    showLoan(`[data-term="${term}"]`);
+    return;
+  }
+  if (vm !== undefined) {
+    data.loanVerifyMonths = Number(vm);
+    showLoan(`[data-vm="${vm}"]`);
     return;
   }
   if (warning !== undefined) {
@@ -268,6 +318,7 @@ panel.addEventListener("click", (event) => {
   if (action === "verify") data.verified = !data.verified;
   else if (action === "claim") data.claim = !data.claim;
   else if (action === "landlord") data.landlord = !data.landlord;
+  else if (action === "loan") data.loanOpen = !data.loanOpen;
   else if (action === "join") {
     if (data.joined.has(data.scheme)) data.joined.delete(data.scheme);
     else data.joined.add(data.scheme);
