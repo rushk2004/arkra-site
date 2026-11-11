@@ -21,6 +21,9 @@ export const hazards = [
 ];
 
 export const measures = {
+  survey: { title: "Property-level flood survey", icon: "pin", tag: "Evidence first · survey required", cost: 250, reduction: 0, loss: 0, carbon: null, why: "Confirm whether this building is exposed, where water might enter and which measures are suitable. The area postcode count cannot establish this." },
+  roof: { title: "Review roof insulation", icon: "home", tag: "EPC-informed · subject to survey", cost: 1500, reduction: 0, loss: 0, carbon: null, why: "This certificate describes a roof with no insulation (assumed). Obtain an installer assessment and a current quote before proceeding." },
+  wall: { title: "Review internal wall insulation", icon: "home", tag: "EPC-informed · subject to survey", cost: 9000, reduction: 0, loss: 0, carbon: null, why: "The EPC records uninsulated walls (assumed). Check moisture, ventilation, conservation constraints and professional suitability first." },
   flood: { title: "Flood doors and raised sockets", icon: "wave", tag: "Flood resilience", cost: 6000, reduction: 2, loss: 250, carbon: null, why: "Reduce water entry and put electrics above likely floodwater. A survey should confirm the protection level." },
   pump: { title: "Air-source heat pump", icon: "bolt", tag: "Low-carbon heating", cost: 13000, reduction: 0, loss: 0, carbon: 1200, why: "Coordinate heating and electrical work in one plan. A heat-loss survey should confirm suitability." },
   shade: { title: "External shading", icon: "sun", tag: "Heat resilience", cost: 1600, reduction: 1, loss: 65, carbon: null, why: "Block direct sunlight before it reaches exposed windows and reduce indoor heat build-up." },

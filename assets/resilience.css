@@ -131,6 +131,7 @@ figcaption { position: absolute; right: 16px; bottom: 10px; color: #3e5e51; font
 .hazard > div strong { display: inline-flex; gap: 6px; align-items: center; font-size: .77rem; }
 .hazard svg { color: var(--green); width: 15px; height: 15px; }
 .hazard small { display: block; color: var(--muted); font-size: .66rem; }
+.hazard .area-risk-note { color: var(--green); font-weight: 700; margin-top: 5px; }
 .grade { display: inline-grid; place-items: center; min-width: 26px; height: 25px; padding: 0 5px; border-radius: 5px; font-size: .78rem; font-weight: 800; font-style: normal; }
 .grade-a, .grade-b { background: #dcedcd; color: #265337; }
 .grade-c { background: #f7edc9; color: #6a4c11; }
@@ -139,6 +140,33 @@ figcaption { position: absolute; right: 16px; bottom: 10px; color: #3e5e51; font
 .epc-row { display: flex; gap: 12px; align-items: center; justify-content: space-between; margin-top: 12px; flex-wrap: wrap; }
 .epc-row p { flex: 1 1 180px; }
 .epc-row select { min-height: 36px; max-width: 170px; }
+.assessment { margin-top: 12px; }
+.assessment-title { display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+.assessment-title h4 { margin: 0; }
+.address-select { margin: 13px 0 8px; }
+.address-select select { width: 100%; }
+.assessment-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin-top: 12px; }
+.assessment-facts > div { background: #f4f8f1; border: 1px solid var(--line); border-radius: 9px; padding: 12px; display: grid; gap: 4px; }
+.assessment-facts span { color: var(--muted); font-size: .7rem; }
+.assessment-facts strong { color: var(--ink); font: 800 1.06rem Manrope, sans-serif; }
+.assessment-facts small { color: var(--muted); font-size: .68rem; }
+.assessment h5 { margin: 15px 0 8px; font: 800 .81rem Manrope, sans-serif; }
+.epc-detail { margin-top: 10px; }
+.epc-facts { display: flex; gap: 12px; align-items: flex-start; }
+.epc-facts > div { min-width: 0; }
+.epc-facts strong { font-size: .84rem; }
+.epc-facts p { margin-top: 5px; }
+.epc-letter { flex: 0 0 52px; display: grid; place-items: center; width: 52px; height: 58px; border-radius: 8px; color: #fff; background: #de9f36; font: 800 1.9rem Manrope, sans-serif; }
+.confidence-list { margin: 0; border-top: 1px solid var(--line); }
+.confidence-list > div { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.confidence-list dt { font-size: .76rem; font-weight: 700; }
+.confidence-list dd { display: grid; justify-items: end; gap: 4px; text-align: right; margin: 0; }
+.confidence-list small { font-size: .67rem; color: var(--muted); }
+.assessment .assessment-source { margin-top: 10px; }
+.manual-epc { margin-top: 10px; }
+.plan-evidence { margin-bottom: 12px; background: #f4f8f1; border-color: #cbdccf; }
+.plan-evidence > strong { font-size: .82rem; }
+.plan-evidence p { margin-top: 6px; }
 .panel-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-top: 18px; }
 .panel-foot p { flex: 1 1 200px; }
 .plan-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .9fr); align-items: start; gap: 12px; }
@@ -246,6 +274,8 @@ input[type="checkbox"] { accent-color: var(--green); min-width: 15px; height: 15
   .panel-head { gap: 7px; }
   .panel-head > .badge { display: none; }
   .hazard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .assessment-facts { grid-template-columns: 1fr; }
+  .confidence-list > div { align-items: flex-start; }
   .promise, .timeline { grid-template-columns: 1fr; gap: 18px; }
   .footer-inner { flex-wrap: wrap; gap: 10px; }
   .footer p { margin: 0; }
