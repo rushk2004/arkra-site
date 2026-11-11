@@ -1,4 +1,5 @@
 import { dividend, hazards, households, loanOffer, loanRates, loanTerms, measures, verifyMonthsOptions, normalisePostcode, planCosts, postcodeRecord, resilienceGrade, sources } from "./model.js";
+import { demoProperties, propertiesForPostcode, evidenceRecommendations } from "./demo-properties.js";
 
 const panel = document.querySelector("#panel");
 const householdInput = document.querySelector("#household");
@@ -23,26 +24,50 @@ let data;
 
 function startHousehold(key) {
   const household = households[key];
+  const previousPropertyId = data?.propertyId || null;
   data = {
     household, selected: [...household.selected], savings: household.savings,
-    grant: household.grant, cashback: household.cashback, horizon: 0, epc: "",
+    grant: household.grant, cashback: household.cashback, horizon: 0, epc: "", propertyId: previousPropertyId,
     verified: false, consent: false, assisted: household.assisted,
     warning: "", claim: false, scheme: "drainage", joined: new Set(), landlord: false, loanOpen: false, loanYears: 5, loanVerifyMonths: 6,
   };
+  if (lookup.status === "found") applyEvidenceRecommendations();
+}
+
+function currentProperty() {
+  return lookup.status === "found"
+    ? demoProperties.find(property => property.id === data.propertyId && property.postcode === lookup.postcode) || null
+    : null;
+}
+
+function recommendedIds() {
+  return evidenceRecommendations(lookup.status === "found" ? lookup.record : null, currentProperty());
+}
+
+function applyEvidenceRecommendations() {
+  // Selecting a different address restarts the *illustrative* plan. Recommendations
+  // are candidates for assessment, not verified property-specific flood findings.
+  data.selected = [...new Set([...data.household.selected, ...recommendedIds()])];
+  data.verified = false;
+  data.loanOpen = false;
 }
 
 function ratingCards() {
   return hazards.map((hazard) => {
     const current = resilienceGrade(data.household, hazard.id, data.horizon);
     const potential = resilienceGrade(data.household, hazard.id, data.horizon, data.selected);
+    const eaEvidence = hazard.id === "flood" && lookup.status === "found"
+      ? `<small class="area-risk-note">EA ${lookup.postcode}: ${lookup.record.high} high, ${lookup.record.medium} medium, ${lookup.record.low} low-risk area addresses (not this home's rating)</small>`
+      : "";
     return `<article class="card hazard"><div><strong>${icon(hazard.icon)} ${hazard.name}</strong><span aria-label="${current ? `Baseline grade ${current}` : "Grade unknown"}">${grade(current)}</span></div>
-      <small>${current ? "Illustrative model · low confidence" : "Unknown · no property evidence"}</small>
+      <small>${current ? "Illustrative profile grade · low confidence" : "Unknown · no property evidence"}</small>
+      ${eaEvidence}
       ${current ? `<small>${data.verified ? "Verified in demo" : "With selected work"}: <strong>${potential}</strong></small>` : ""}</article>`;
   }).join("");
 }
 
 function twinPanel() {
-  return heading("01 / KNOW", "Home climate twin", "Check official flood exposure for a postcode, then explore the example household’s resilience rating.", "England postcode data")
+  return heading("01 / KNOW", "Home climate twin", "Connect official postcode flood exposure to an address-level EPC example, then review what still needs a property survey.", "Evidence-led demo")
     + `<section class="card lookup"><h4>Check a real postcode</h4><p>Published Environment Agency postcode counts. The result describes the area around addresses.</p>
       <form class="lookup-row" id="lookup-form">
         <label class="field">Postcode<input name="postcode" placeholder="e.g. HX7 8AD" maxlength="10" autocomplete="postal-code" required></label>
@@ -51,12 +76,43 @@ function twinPanel() {
       </form>
       <div class="lookup-result" id="lookup-result" role="status"></div>
     </section>
-    <div class="section-row"><strong>Resilience rating <span class="badge neutral">Example household</span></strong><div class="segments" role="group" aria-label="Scenario year">${horizons.map((year, index) => `<button data-horizon="${index}" aria-pressed="${data.horizon === index}">${year}</button>`).join("")}</div></div>
+    ${propertyAssessment()}
+    <div class="section-row"><strong>Resilience rating <span class="badge neutral">Illustrative profile only</span></strong><div class="segments" role="group" aria-label="Scenario year">${horizons.map((year, index) => `<button data-horizon="${index}" aria-pressed="${data.horizon === index}">${year}</button>`).join("")}</div></div>
     <div id="hazards" class="hazard-grid">${ratingCards()}</div>
-    <div class="card epc-row"><p><strong>Energy performance (EPC)</strong><br>${data.household.name}’s example EPC is ${data.household.epc}. Enter the band from your own certificate to record it separately.</p>
-      <label class="field">Your EPC band<select id="epc"><option value="">Unknown</option>${[..."ABCDEFG"].map(value => `<option${data.epc === value ? " selected" : ""}>${value}</option>`).join("")}</select></label>
-      ${link(sources.epc, "Find an EPC ↗")}</div>
-    <div class="panel-foot"><p class="small">A is the most resilient grade. Example grades and future scenarios are model assumptions. The postcode lookup never assigns your home a grade.</p>${next("plan", "See the plan")}</div>`;
+    <div class="panel-foot"><p class="small">A is the most resilient grade in ARKRA’s hypothetical model. These grades are not calculated from the EA counts or EPC and must not be interpreted as actual property risk. The 2035 and 2050 scenarios are illustrative.</p>${next("plan", "See the evidence-linked plan")}</div>`;
+}
+
+function propertyAssessment() {
+  if (lookup.status !== "found") {
+    return `<section class="card assessment"><h4>Property assessment</h4><p>Check a postcode above to connect its official area evidence to a selected demonstration property. An individual building's flood risk remains unassessed.</p></section>`;
+  }
+  const property = currentProperty();
+  const matches = propertiesForPostcode(lookup.postcode);
+  const hasExposedAddresses = lookup.record.high + lookup.record.medium + lookup.record.low > 0;
+  const epcDetail = property
+    ? `<div class="epc-facts"><span class="epc-letter">${property.epc}</span><div><strong>Current ${property.epc} (${property.epcScore}) · potential ${property.potentialEpc} (${property.potentialScore})</strong><p>${property.type} · ${property.floorArea} m² · valid until ${property.validUntil}</p><p>Walls: ${property.wall}. Roof: ${property.roof}.</p><p>Assessed ${property.assessmentDate}. ${link(property.certificate, "View this actual GOV.UK certificate ↗")}</p></div></div>`
+    : `<p>No EPC was retrieved for an address in this postcode. ARKRA does not automatically search the EPC register; ${link(sources.epc, "look up a certificate on GOV.UK ↗")}.</p><label class="field manual-epc">Optional EPC band from your own certificate (self-reported, not verified)<select id="epc"><option value="">Unknown</option>${[..."ABCDEFG"].map(value => `<option value="${value}" ${data.epc === value ? "selected" : ""}>${value}</option>`).join("")}</select></label>`;
+
+  return `<section class="card assessment" aria-label="Property assessment">
+    <div class="assessment-title"><h4>Property assessment</h4><span class="badge neutral">Evidence & confidence</span></div>
+    <label class="field address-select">Choose an address or demonstration property
+      <select id="property-select"><option value="" ${!property ? "selected" : ""}>Illustrative property · no verified EPC</option>${matches.map(item => `<option value="${item.id}" ${item.id === property?.id ? "selected" : ""}>${item.address} · EPC ${item.epc}</option>`).join("")}</select>
+    </label>
+    <p class="small">${matches.length ? "These three real certificate records are curated for this postcode; other addresses require the government lookup." : "Only an illustrative property is available for this postcode in this static MVP; search GOV.UK for a real address."} The example household and its finances are fictional and are not the occupants of any listed address.</p>
+    <div class="assessment-facts">
+      <div><span>EA postcode exposure</span><strong>${hasExposedAddresses ? `${number.format(lookup.record.high + lookup.record.medium + lookup.record.low)} addresses in listed bands` : "No addresses in listed bands"}</strong><small>Official area-level counts · not the building's flood risk</small></div>
+      <div><span>Property EPC</span><strong>${property ? `Band ${property.epc}` : data.epc ? `Band ${data.epc}` : "Unknown"}</strong><small>${property ? "Verified public certificate snapshot" : data.epc ? "Self-reported only" : "Not retrieved"}</small></div>
+    </div>
+    <div class="epc-detail"><h5>Energy performance</h5>${epcDetail}</div>
+    <h5>Data confidence</h5>
+    <dl class="confidence-list">
+      <div><dt>Postcode exposure</dt><dd><span class="badge">Official · area level</span><small>Environment Agency published counts</small></dd></div>
+      <div><dt>EPC information</dt><dd><span class="badge ${property ? "" : "neutral"}">${property ? "Official certificate" : data.epc ? "Self-reported" : "Unverified"}</span><small>${property ? "Property-specific energy evidence" : "Property-specific certificate not retrieved"}</small></dd></div>
+      <div><dt>Building flood risk</dt><dd><span class="badge neutral">Survey required</span><small>No property-level flood assessment</small></dd></div>
+      <div><dt>2050 scenario</dt><dd><span class="badge neutral">Illustrative model</span><small>Not an official property forecast</small></dd></div>
+    </dl>
+    <p class="small assessment-source">EA dataset: ${link(sources.flood, "source and methodology ↗")} · ${link(sources.risk, "Check a specific property's surrounding flood risk ↗")}</p>
+  </section>`;
 }
 
 function showLookup() {
@@ -77,9 +133,9 @@ function showLookup() {
     output.innerHTML = `<strong>No published match for ${lookup.postcode}</strong><p>This dataset covers England. A missing result leaves exposure unknown.</p>` + source;
   } else {
     const { high, medium, low, groundwater } = lookup.record;
-    output.innerHTML = `<strong>${lookup.postcode}</strong> <span class="badge">Official area data</span>
+    output.innerHTML = `<strong>${lookup.postcode}</strong> <span class="badge">Official area data · bundled snapshot</span>
       <div class="lookup-counts">${[["High", high], ["Medium", medium], ["Low", low]].map(([band, count]) => `<div><b>${number.format(count)}</b><small>${band} risk addresses</small></div>`).join("")}</div>
-      <p>Groundwater flooding: ${groundwater.toLowerCase()}. Counts combine rivers, sea and surface water. Very-low risk addresses are outside the published counts.</p>
+      <p>Groundwater indicator: ${groundwater.toLowerCase()}. Counts use the highest risk category from rivers, sea or surface water for the area surrounding each address. Very-low risk addresses are not counted; do not treat these counts as a property-specific assessment or a denominator.</p>
       <p>© Environment Agency copyright and/or database right 2025. All rights reserved. Dataset published under the Open Government Licence.</p>` + source;
   }
 }
@@ -88,8 +144,14 @@ async function checkPostcode(input) {
   const postcode = normalisePostcode(input);
   const sequence = lookup.sequence + 1;
   lookup = { sequence, postcode: postcode?.display || input, status: postcode ? "loading" : "invalid" };
+  data.propertyId = null;
+  data.epc = "";
+  applyEvidenceRecommendations();
   showLookup();
-  if (!postcode) return;
+  if (!postcode) {
+    render();
+    return;
+  }
   let record;
   let status;
   try {
@@ -107,20 +169,29 @@ async function checkPostcode(input) {
   }
   if (lookup.sequence !== sequence) return;
   lookup = { sequence, postcode: postcode.display, status, record };
-  showLookup();
+  if (status === "found") data.propertyId = propertiesForPostcode(postcode.display)[0]?.id || null;
+  applyEvidenceRecommendations();
+  render();
 }
 
 function planPanel() {
   const hasPump = data.selected.includes("pump");
-  const options = [...data.household.options].sort((a, b) => {
+  const suggested = recommendedIds();
+  const property = currentProperty();
+  const options = [...new Set([...suggested, ...data.household.options, ...data.selected])].sort((a, b) => {
+    const priority = id => suggested.includes(id) ? 1 : 0;
     const value = (id) => measures[id].loss / Math.max(1, measures[id].cost);
-    return Number(data.selected.includes(b)) - Number(data.selected.includes(a)) || value(b) - value(a);
+    return priority(b) - priority(a) || Number(data.selected.includes(b)) - Number(data.selected.includes(a)) || value(b) - value(a);
   });
-  return heading("02 / PLAN & PAY", "One plan, one funding gap", "Choose measures and see the cash needed before any later cashback arrives.", "Illustrative quotes")
+  const evidenceIntro = lookup.status === "found"
+    ? `<div class="card plan-evidence"><strong>Connected evidence: ${lookup.postcode}${property ? ` · ${property.address}` : " · illustrative property"}</strong><p>${suggested.length ? `ARKRA has added ${suggested.map(id => measures[id].title.toLowerCase()).join(", ")} for review.` : "No specific retrofit recommendation is justified by the available evidence."} ${property ? `The public EPC is ${property.epc};` : "No verified EPC is attached;"} a building-level flood survey is still needed before deciding on flood barriers. Existing profile choices below are fictional.</p><p><a href="#twin">Review the evidence and confidence levels ↗</a></p></div>`
+    : `<div class="notice">No connected postcode evidence yet. <a href="#twin">Check a postcode in the Climate Twin ↗</a> to add evidence-informed suggestions. All current choices are illustrative.</div>`;
+  return heading("02 / PLAN & PAY", "One plan, one funding gap", "Evidence-informed suggestions feed into an editable demonstration plan and financing example.", "Illustrative quotes")
+    + evidenceIntro
     + `<div class="plan-grid"><section aria-label="Recommended measures" class="measure-list">${options.map((id) => {
       const measure = measures[id];
       const result = measure.loss ? `${money(measure.loss)}/yr modelled loss avoided` : "No direct physical-risk saving modelled";
-      return `<article class="card measure"><div class="cost-row"><label><input id="measure-${id}" type="checkbox" data-measure="${id}" ${data.selected.includes(id) ? "checked" : ""}><span><strong>${measure.title}</strong><small>${measure.tag}</small></span></label><span class="measure-cost">${measure.cost ? money(measure.cost) : "£0"}</span></div><p>${measure.why}</p><span class="small">${result} · ${measure.carbon === null ? "carbon impact not modelled" : `~${number.format(measure.carbon)} kg CO₂e/yr assumed savings`}</span></article>`;
+      return `<article class="card measure"><div class="cost-row"><label><input id="measure-${id}" type="checkbox" data-measure="${id}" ${data.selected.includes(id) ? "checked" : ""}><span><strong>${measure.title}</strong><small>${suggested.includes(id) ? "Evidence-informed candidate · " : "Illustrative profile choice · "}${measure.tag}</small></span></label><span class="measure-cost">${measure.cost ? money(measure.cost) : "£0"}</span></div><p>${measure.why}</p><span class="small">${result} · ${measure.carbon === null ? "carbon impact not modelled" : `~${number.format(measure.carbon)} kg CO₂e/yr assumed savings`}</span></article>`;
     }).join("")}</section>
       <section class="card money-card" aria-label="Funding calculator"><h4>Cash flow at a glance</h4><div id="funding-result" aria-live="polite"></div>
         <div class="funding-controls">
@@ -134,7 +205,7 @@ function planPanel() {
     <div id="loan-offer" aria-live="polite"></div>
     <div class="notice">${data.household.role === "Renting" ? "<strong>For renters.</strong> Send the plan to the landlord for a decision on installation, funding and permissions." : "<strong>One proposed application.</strong> A further advance or retrofit loan could bridge the gap, subject to affordability. A pilot would use vetted installers and independent checks."}</div>
     ${data.household.role === "Renting" ? `<div class="panel-foot"><button type="button" class="button plain" data-action="landlord">Prepare landlord request</button></div>${data.landlord ? '<p class="notice">Request draft: Could we review the overheating in my flat and get a quote for external shading? The example plan also suggests agreeing a heat-warning routine. This is ready for you to copy and send.</p>' : ""}` : ""}
-    <div class="panel-foot"><p class="small">Order shows selected measures first, then modelled risk reduction per pound. Figures assume eligibility when toggled.</p>${next("reward", "See the Dividend")}</div>`;
+    <div class="panel-foot"><p class="small">New survey/insulation costs are indicative, not official quotes or EPC cost estimates. Installation, eligibility and savings require independent checks. The original household's financial and resilience assumptions remain separate from the official data.</p>${next("reward", "See the Dividend")}</div>`;
 }
 
 function showFunding() {
@@ -328,6 +399,14 @@ panel.addEventListener("click", (event) => {
 
 panel.addEventListener("change", (event) => {
   const control = event.target;
+  if (control.id === "property-select") {
+    const chosen = demoProperties.find(property => property.id === control.value && property.postcode === lookup.postcode);
+    data.propertyId = chosen?.id || null;
+    data.epc = "";
+    applyEvidenceRecommendations();
+    render("#property-select");
+    return;
+  }
   const measure = control.dataset.measure;
   if (measure) {
     if (control.checked) data.selected.push(measure);
@@ -336,7 +415,11 @@ panel.addEventListener("change", (event) => {
     render(`#${control.id}`);
     return;
   }
-  if (control.id === "epc") data.epc = control.value;
+  if (control.id === "epc") {
+    data.epc = control.value;
+    render("#epc");
+    return;
+  }
   if (control.id === "grant" || control.id === "cashback") {
     data[control.id] = control.checked;
     showFunding();
@@ -361,3 +444,5 @@ householdInput.value = "sam";
 startHousehold("sam");
 render();
 route();
+// available for any other postcode in the published England dataset.
+checkPostcode("HX7 8AD");
