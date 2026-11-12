@@ -31,7 +31,7 @@ function startHousehold(key) {
     verified: false, consent: false, assisted: household.assisted,
     warning: "", claim: false, scheme: "drainage", joined: new Set(), landlord: false, loanOpen: false, loanYears: 5, loanVerifyMonths: 6,
   };
-  if (lookup.status === "found") applyEvidenceRecommendations();
+  if (lookup.status === "found") resetIllustrativePlan();
 }
 
 function currentProperty() {
@@ -44,10 +44,9 @@ function recommendedIds() {
   return evidenceRecommendations(lookup.status === "found" ? lookup.record : null, currentProperty());
 }
 
-function applyEvidenceRecommendations() {
-  // Selecting a different address restarts the *illustrative* plan. Recommendations
-  // are candidates for assessment, not verified property-specific flood findings.
-  data.selected = [...new Set([...data.household.selected, ...recommendedIds()])];
+function resetIllustrativePlan() {
+  // Evidence suggests candidates for review. The visitor chooses which to fund.
+  data.selected = [...data.household.selected];
   data.verified = false;
   data.loanOpen = false;
 }
@@ -146,7 +145,7 @@ async function checkPostcode(input) {
   lookup = { sequence, postcode: postcode?.display || input, status: postcode ? "loading" : "invalid" };
   data.propertyId = null;
   data.epc = "";
-  applyEvidenceRecommendations();
+  resetIllustrativePlan();
   showLookup();
   if (!postcode) {
     render();
@@ -169,8 +168,7 @@ async function checkPostcode(input) {
   }
   if (lookup.sequence !== sequence) return;
   lookup = { sequence, postcode: postcode.display, status, record };
-  if (status === "found") data.propertyId = propertiesForPostcode(postcode.display)[0]?.id || null;
-  applyEvidenceRecommendations();
+  resetIllustrativePlan();
   render();
 }
 
@@ -184,7 +182,7 @@ function planPanel() {
     return priority(b) - priority(a) || Number(data.selected.includes(b)) - Number(data.selected.includes(a)) || value(b) - value(a);
   });
   const evidenceIntro = lookup.status === "found"
-    ? `<div class="card plan-evidence"><strong>Connected evidence: ${lookup.postcode}${property ? ` · ${property.address}` : " · illustrative property"}</strong><p>${suggested.length ? `ARKRA has added ${suggested.map(id => measures[id].title.toLowerCase()).join(", ")} for review.` : "No specific retrofit recommendation is justified by the available evidence."} ${property ? `The public EPC is ${property.epc};` : "No verified EPC is attached;"} a building-level flood survey is still needed before deciding on flood barriers. Existing profile choices below are fictional.</p><p><a href="#twin">Review the evidence and confidence levels ↗</a></p></div>`
+    ? `<div class="card plan-evidence"><strong>Connected evidence: ${lookup.postcode}${property ? ` · ${property.address}` : " · illustrative property"}</strong><p>${suggested.length ? `ARKRA suggests ${suggested.map(id => measures[id].title.toLowerCase()).join(", ")} for review. Select a measure below to include its cost in your plan.` : "No specific retrofit recommendation is justified by the available evidence."} ${property ? `The public EPC is ${property.epc};` : "No verified EPC is attached;"} a building-level flood survey is still needed before deciding on flood barriers. Existing profile choices below are fictional.</p><p><a href="#twin">Review the evidence and confidence levels ↗</a></p></div>`
     : `<div class="notice">No connected postcode evidence yet. <a href="#twin">Check a postcode in the Climate Twin ↗</a> to add evidence-informed suggestions. All current choices are illustrative.</div>`;
   return heading("02 / PLAN & PAY", "One plan, one funding gap", "Evidence-informed suggestions feed into an editable demonstration plan and financing example.", "Illustrative quotes")
     + evidenceIntro
@@ -403,7 +401,7 @@ panel.addEventListener("change", (event) => {
     const chosen = demoProperties.find(property => property.id === control.value && property.postcode === lookup.postcode);
     data.propertyId = chosen?.id || null;
     data.epc = "";
-    applyEvidenceRecommendations();
+    resetIllustrativePlan();
     render("#property-select");
     return;
   }
